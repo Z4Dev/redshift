@@ -2,23 +2,22 @@
   "name": "redshift",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/itsSoweto/redshift.git",
+  "repository": "https://github.com/rocketmta/redshift.git",
   "author": "Vítor Ribeiro <buss.vitorsheik@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev -r tsconfig-paths/register --respawn  --transpile-only --ignore-watch node_modules  src/index.ts",
-    "test": "jest"
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "blueapi": "^0.1.0",
+    "blueapi.js": "^0.0.4",
+    "canvas": "^2.9.1",
+    "discord.js": "^13.7.0",
+    "dotenv": "^16.0.1",
+    "nodemon": "^2.0.16"
   },
   "devDependencies": {
     "eslint": "^8.16.0",
-    "ts-node-dev": "^2.0.0",
-    "tsconfig-paths": "^4.0.0",
-    "typescript": "^4.7.2"
-  },
-  "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.26.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "jest": "^28.1.0",
-    "ts-jest": "^28.0.3"
+    "sucrase": "^3.21.0"
   }
 }
