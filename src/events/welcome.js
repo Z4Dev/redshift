@@ -36,8 +36,8 @@ export const welcomeMessage = async (member, cid, redshift) => {
     );
 
     const formatName = (name) => {
-      return name.toString().length >= 10 ?  
-        name.slice(0, 10) + '..'
+      return name.toString().length >= 9 ?  
+        name.slice(0, 9) + '..'
       :
         name
     }
