@@ -76,7 +76,7 @@ export const welcomeMessage = async (member, cid, redshift) => {
     } catch (error) {
         console.log(error);
     }
-} catch (e) {
-    console.log(e);
+} catch (err) {
+    console.log(err);
 }
 }
