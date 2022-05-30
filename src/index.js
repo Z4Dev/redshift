@@ -104,7 +104,7 @@ Redshift.on("guildMemberAdd", async (member) => {
   );
 
 
-  Redshift.channels.cache.get(settings.BOARD_CHANNEL).send(`Hey, <@${member.user.id}> seja bem vindo(a), fique atento(a) as #📋・regras e fique de olho em #🎉・anuncios ou #💜・spoilers!`);
+  Redshift.channels.cache.get(settings.BOARD_CHANNEL).send(`Hey, <@${member.user.id}> seja bem vindo(a), fique atento(a) as <#${settings.rules}> e fique de olho em <#${settings.anunc}> ou <#${settings.spoilers}>!`);
   welcomeMessage(member, settings.BOARD_CHANNEL, Redshift);
   
   member.roles.add(role);
