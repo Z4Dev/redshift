@@ -34,7 +34,25 @@ fs.readdir(path.join(__dirname + '/commands'), (err, files) => {
 
     Redshift.command.set(f, props)
   })
-})
+});
+
+let myFunc = num => Number(num);
+
+
+
+
+
+
+Redshift.on("ready", async (e) => {
+  console.log("Redshift is online")
+  
+  setInterval(() => {
+    var server = Redshift.guilds.cache.get(settings.GROUP_ID);
+    let memberCount = server.memberCount;
+    Redshift.channels.fetch(settings.memberCount).then(channel => channel.setName(memberCount  + " Astronautas  💜"))
+  }, 60000);
+});
+
 
 
 Redshift.on("message", async message => {  
@@ -67,6 +85,8 @@ Redshift.on("message", async message => {
       });
     }
 
+
+
     if (!message.content.startsWith(settings.PREFIX)  || message.author.bot) return null;
 
     const args = message.content.slice(settings.PREFIX.length).split(/ +/);
@@ -91,8 +111,6 @@ Redshift.on("message", async message => {
 // 🥉 <@${member3.id}> | Com **3096** mensagens`);
 
 //       topTime(member1, member2, member3, settings.BOARD_CHANNEL, Redshift);
-
-
       command && message.reply("Este comando é inválido ou inexistente.")
     }
 });
@@ -102,7 +120,6 @@ Redshift.on("guildMemberAdd", async (member) => {
   var role = member.guild.roles.cache.find(
       (r) => r.id === settings.AUTO_ROLE
   );
-
 
   Redshift.channels.cache.get(settings.BOARD_CHANNEL).send(`Hey, <@${member.user.id}> seja bem vindo(a), fique atento(a) as <#${settings.rules}> e fique de olho em <#${settings.anunc}> ou <#${settings.spoilers}>!`);
   welcomeMessage(member, settings.BOARD_CHANNEL, Redshift);

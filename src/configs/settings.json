@@ -7,10 +7,23 @@
   "rules": "980329082799661056",
   "spoilers": "958538390561779733",
   "anunc": "951243918756958229",
+  "memberCount": "980769552499605524",
   "MAX_ADV_TOKICK": 10,
   "joinImage": "https://media.discordapp.net/attachments/978935436925886504/980352750149857320/rocket_board3.png?width=1200&height=469",
   "topImage": "https://cdn.discordapp.com/attachments/978935436925886504/980344900937723934/rocket_board.png",
   "topMask": "https://media.discordapp.net/attachments/978935436925886504/980345849970302987/rocket_board2.png?width=566&height=566",
+  "numbers": {
+    "1": ":one:",
+    "2": ":two:",
+    "3": ":three:",
+    "4": ":four:",
+    "5": ":five:",
+    "6": ":six:",
+    "7": ":seven:",
+    "8": ":eight:",
+    "9": ":nine:",
+    "0": ":zero:"
+  },
   "ForbiddenWords": [
     "vtmnc",
     "Vtmnc",
