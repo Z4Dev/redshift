@@ -1,7 +1,9 @@
 import dotenv from "dotenv";
 import path from "path";
 import fs from "fs";
+import SQLite  from "better-sqlite3"
 import { Client, Collection } from "discord.js";
+import moment from "moment-timezone"
 
 // Configs
 import settings from "./configs/settings.json"
@@ -17,7 +19,10 @@ const Redshift = new Client({
   ws: { intents: intents },
 });
 
+const sql = new SQLite("./src/score.sqlite", {fileMustExist: true})
+
 Redshift.command = new Collection();
+
 
 
 const adv = []
@@ -36,15 +41,25 @@ fs.readdir(path.join(__dirname + '/commands'), (err, files) => {
   })
 });
 
-let myFunc = num => Number(num);
-
-
-
-
-
 
 Redshift.on("ready", async (e) => {
   console.log("Redshift is online")
+  
+  Redshift.getScore = sql.prepare("SELECT * FROM leaderboard WHERE user = ?");
+  Redshift.setScore = sql.prepare("INSERT OR REPLACE INTO leaderboard (id, user, score) VALUES (@id, @user, @score);");
+
+  setInterval(() => {
+    let date = new Date
+    let data = moment.tz(date, "America/Sao_Paulo");
+    let weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date().getDay()]  
+
+    if(weekday === "Mon") {
+      if (data.hour() === 16) {
+        Redshift.command.get("tt.js").run(Redshift)
+      }
+    }
+  }, 1.8e+7);
+
   
   setInterval(() => {
     var server = Redshift.guilds.cache.get(settings.GROUP_ID);
@@ -55,7 +70,7 @@ Redshift.on("ready", async (e) => {
 
 
 
-Redshift.on("message", async message => {  
+Redshift.on("messageCreate", async message => {  
     const regex = new RegExp(`(\\b|\\d)(${settings.ForbiddenWords.join('|')})(\\b|\\d)`, 'i');
     if (regex.test(message.content)) {
       message.delete();
@@ -85,9 +100,26 @@ Redshift.on("message", async message => {
       });
     }
 
-
+    let score;
+    if (!regex.test(message.content)) { 
+      if (message.author.bot) return;
+     
+      if (!settings.ignoreIDS.find(id => id === message.author.id))  {
+      if (message.guild) {
+        score = Redshift.getScore.get(message.author.id);
+   
+        if (!score) {
+          score = { id: `${message.guild.id}-${message.author.id}`, user: message.author.id, score: 0 }
+        }
+  
+        score.score = score.score + 10;
+        Redshift.setScore.run(score);
+      }
+    }
+  };  
 
     if (!message.content.startsWith(settings.PREFIX)  || message.author.bot) return null;
+    
 
     const args = message.content.slice(settings.PREFIX.length).split(/ +/);
     const command = args.shift().toLowerCase();
@@ -96,21 +128,6 @@ Redshift.on("message", async message => {
     if (cmd) {
       cmd.run(Redshift, message, args, settings.PREFIX)
     } else {
-      const fetchUser =  id => Redshift.users.fetch(id)
-
-      
-//       let member1 = await fetchUser("667938764575866900");
-//       let member2 = await fetchUser("824079236239065088");
-//       let member3 = await fetchUser("389089969911889920");
-
-//       Redshift.channels.cache
-//       .get(settings.BOARD_CHANNEL).send(`> Parabéns aos tops semanais!! :trophy: 
-
-// 🥇 <@${member1.id}> | Com **4096** mensagens
-// 🥈 <@${member2.id}> | Com **4000** mensagens
-// 🥉 <@${member3.id}> | Com **3096** mensagens`);
-
-//       topTime(member1, member2, member3, settings.BOARD_CHANNEL, Redshift);
       command && message.reply("Este comando é inválido ou inexistente.")
     }
 });
@@ -126,6 +143,7 @@ Redshift.on("guildMemberAdd", async (member) => {
   
   member.roles.add(role);
 });
+
 
 
 dotenv.config();

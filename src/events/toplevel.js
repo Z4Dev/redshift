@@ -7,12 +7,7 @@ import settings from "../configs/settings.json"
 
 export const topTime = async (member1, member2, member3, cid, redshift) => {
   try {
-    if (!member1 ) return;
-    // const memberNickname =
-    //     member.user.username > 11
-    //         ? member.user.username.substring(0, 11)
-    //         : member.user.username;
-
+    if (!member1  ) return;
     const canvas = Canvas.createCanvas(1080, 1080);
     const context = canvas.getContext("2d");
     Canvas.registerFont(
