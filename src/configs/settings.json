@@ -1,6 +1,6 @@
 {
   "PREFIX": "r.",
-  "GROUP_ID": "978209185588203540",
+  "GROUP_ID": "940660578437955614",
   "BOARD_CHANNEL": "980411110014484510",
   "AUTO_ROLE": "978213540584366080",
   "STAFF_ROLE": "978213901562957835",
@@ -9,6 +9,8 @@
   "anunc": "951243918756958229",
   "memberCount": "980769552499605524",
   "leaderboard": "980411110014484510",
+  "ChannelBoost": "",
+  "ChannelPunishments": "",
   "MAX_ADV_TOKICK": 10,
   "ignoreIDS": [
     "667938764575866900",
