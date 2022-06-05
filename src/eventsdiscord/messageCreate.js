@@ -19,7 +19,8 @@ module.exports = async (Redshift,message) => {
                     db.delete(`/${message.author.id}`)
                 })
                 .catch(err => {
-                    db.push(`/${message.author.id}`, 10)
+                    var data = db.getData(`/${message.author.id}`)
+                    db.push(`/${message.author.id}`, data)
                     return message.channel.send(`Ocorreu um problema ao tentar kickar ${message.author}, talvez eu não tenho permissões suficientes para kickar esse usuário!`)
                 });       
             }

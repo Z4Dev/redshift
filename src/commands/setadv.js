@@ -14,7 +14,7 @@ module.exports.run = (Redshift, message, args) => {
         return message.reply({content: 'Você precisa escolher uma quantidade!'})
     }
     if(args[1] >= 0 && args[1] <= settings.MAX_ADV_TOKICK) {
-        db.push(`/${user.id}`, args[1])
+        db.push(`/${user.id}`,Number(args[1]))
         return message.reply({content: `${message.author} setou ${args[1]} advertências no(a) ${user}`})
     }
     else {
