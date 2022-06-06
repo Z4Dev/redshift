@@ -4,7 +4,7 @@ import { JsonDB } from 'node-json-db'
 import { Config } from 'node-json-db/dist/lib/JsonDBConfig'
 var db = new JsonDB(new Config("ADVS", true, false, '/'));
 module.exports.run = (Redshift, message, args) => {
-
+    if (!message.member.roles.cache.some(role => role.id === settings.STAFF_ROLE)) return message.reply("Você não tem permissão para usar esse comando.");
     const user = message.mentions.members.first();
 
     if(!user) {
@@ -13,8 +13,12 @@ module.exports.run = (Redshift, message, args) => {
     if(!args[1]) {
         return message.reply({content: 'Você precisa escolher uma quantidade!'})
     }
-    if(args[1] >= 0 && args[1] <= settings.MAX_ADV_TOKICK) {
+    if(args[1] >= 1 && args[1] <= settings.MAX_ADV_TOKICK) {
         db.push(`/${user.id}`,Number(args[1]))
+        return message.reply({content: `${message.author} setou ${args[1]} advertências no(a) ${user}`})
+    }
+    else if(args[1] == 0 && args[1] <= settings.MAX_ADV_TOKICK) {
+        db.delete(`/${user.id}`)
         return message.reply({content: `${message.author} setou ${args[1]} advertências no(a) ${user}`})
     }
     else {

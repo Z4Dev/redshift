@@ -10,7 +10,7 @@ module.exports.run = async (Redshift, message) => {
     const embed = new MessageEmbed()
     .setColor('#8257E5')
     .setTitle(`Rocket Roleplay - ClosedBeta`)
-    .setDescription(`A ClosedBeta está prevista para o dia 29/08/2022 ( Faltam **${dias.toString().match(re)[0]}** dias )`)
+    .setDescription(`A ClosedBeta está prevista para o dia 29/07/2022 ( Faltam **${dias.toString().match(re)[0]}** dias )`)
     .setTimestamp()
     .setFooter({text: `Executado por ${message.author.username}#${message.author.discriminator}`, iconURL: message.author.displayAvatarURL()})
     return message.channel.send({embeds: [embed]})
