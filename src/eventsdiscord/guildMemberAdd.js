@@ -1,6 +1,6 @@
 import { welcomeMessage } from "../events/welcome";
-
-module.exports.run = async (Redshift,member) => {
+import settings from "../configs/settings.json"
+module.exports = (Redshift,member) => {
     var role = member.guild.roles.cache.find(
         (r) => r.id === settings.AUTO_ROLE
     );
