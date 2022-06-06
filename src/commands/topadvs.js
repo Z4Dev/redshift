@@ -1,14 +1,13 @@
 import {MessageEmbed} from 'discord.js'
 import { JsonDB } from 'node-json-db'
 import { Config } from 'node-json-db/dist/lib/JsonDBConfig'
-var db = new JsonDB(new Config("ADVS", true, false, '/'));
-db.reload()
-
-const values = []
 
 module.exports.run = async (Redshift, message) => {
+    var db = new JsonDB(new Config("ADVS", true, false, '/'));
+    db.reload()
+    const values = []
     for(const linhas in db.data) {
-        message.guild.members.fetch(linhas).then(infos => {
+        await message.guild.members.fetch(linhas).then(infos => {
             if(infos != undefined) {
                 const data = db.getData(`/${linhas}`)
                 values.push({
@@ -27,12 +26,17 @@ module.exports.run = async (Redshift, message) => {
       });
     values.reverse()
 
-    values.length = 5
     var top = "";
-    for (var i in values) {
-        await message.guild.members.fetch(values[i].id).then(infos => {
-            top += `⋆ **${values.indexOf(values[i])+1}.** ${infos.user.username}#${infos.user.discriminator} : ${values[i].value}\n\n`;
-        })
+    if(values.length <1) {
+        top = `⋆ ** Atualmente ninguém possui advertências!**`
+    }
+    else {
+        values.length = 5
+        for (var i in values) {
+            await message.guild.members.fetch(values[i].id).then(infos => {
+                top += `⋆ **${values.indexOf(values[i])+1}.** ${infos.user.username}#${infos.user.discriminator} : ${values[i].value}\n\n`;
+            }) 
+        }
     }
     const embed = new MessageEmbed()
         .setColor('#8257E5')

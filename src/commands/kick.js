@@ -1,7 +1,7 @@
 import {MessageEmbed,MessageActionRow,MessageButton} from 'discord.js'
 import settings from '../configs/settings.json'
 module.exports.run = async (RedShift, message, args) => {
-    if (!message.member.roles.cache.some(role => role.id === settings.STAFF_ROLE)) return message.reply("Você não tem permissão para usar esse commando.");
+    //if (!message.member.roles.cache.some(role => role.id === settings.STAFF_ROLE)) return message.reply("Você não tem permissão para usar esse commando.");
     try {
         if (!args[0]) return message.reply({content: `Você precisa **mencionar** algum usuário ou o **id** de algum usuário`})
 

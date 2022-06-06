@@ -3,8 +3,8 @@ import { JsonDB } from 'node-json-db'
 import { Config } from 'node-json-db/dist/lib/JsonDBConfig'
 module.exports.run = (Redshift, message) => {
     var db = new JsonDB(new Config("ADVS", true, false, '/'));
-    const user = message.mentions.members.first();
     db.reload()
+    const user = message.mentions.members.first();
     if(!user) {
         try {
             var data = db.getData(`/${message.author.id}`)
@@ -25,7 +25,7 @@ module.exports.run = (Redshift, message) => {
     } catch(err) {
         db.push(`/${user.id}`, 0)
     }
-    var data = db.getData(`/${message.author.id}`)
+    var data = db.getData(`/${user.id}`)
     const embed = new MessageEmbed()
     .setColor('#8257E5')
     .setTimestamp()
