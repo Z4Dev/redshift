@@ -36,5 +36,6 @@ module.exports.run = async (Redshift, message) => {
 
 module.exports.help = {
     name: "userinfo",
-    usage: "Userinfo Command"
+    usage: "Mostra algumas informações de algum usuário",
+    type: "normal"
 }

@@ -14,5 +14,6 @@ module.exports.run = async (redshift, message, args, prefix) => {
 
 module.exports.help = {
     name: "clear",
-    usage: "Clear command for admins"
+    usage: "Clear command for admins",
+    type: "admin"
 }

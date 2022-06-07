@@ -18,5 +18,6 @@ module.exports.run = async (Redshift, message) => {
 
 module.exports.help = {
     name: "closedbeta",
-    usage: "Closedbeta Command"
+    usage: "Mostra algumas informações da closedbeta",
+    type: "normal"
 }

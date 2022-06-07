@@ -25,5 +25,6 @@ Parabéns aos colocados desta semana! A Sua atividade no grupo ajuda a manter a 
 
 module.exports.help = {
     name: "tt",
-    usage: "Clear command for admins"
+    usage: "Clear command for admins",
+    type: "admin"
 }

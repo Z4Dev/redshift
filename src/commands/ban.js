@@ -98,5 +98,6 @@ module.exports.run = async (RedShift, message, args) => {
 }
 module.exports.help = {
     name: "ban",
-    usage: "Ban command for admins"
+    usage: "Ban command for admins",
+    type: "admin"
 }

@@ -98,5 +98,6 @@ module.exports.run = async (RedShift, message, args) => {
 }
 module.exports.help = {
     name: "kick",
-    usage: "Kick command for admins"
+    usage: "Kick command for admins",
+    type: "admin"
 }

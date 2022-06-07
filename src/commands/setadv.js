@@ -27,5 +27,6 @@ module.exports.run = (Redshift, message, args) => {
 }
 module.exports.help = {
     name: "setadv",
-    usage: "setav command for admins"
+    usage: "setav command for admins",
+    type: "admin"
 }

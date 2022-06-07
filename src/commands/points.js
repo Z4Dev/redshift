@@ -16,5 +16,6 @@ module.exports.run = async (redshift, message, args, prefix) => {
 
 module.exports.help = {
     name: "points",
-    usage: "Avatar Command"
+    usage: "Mostra os pontos de algum usuário!",
+    type: "normal"
 }

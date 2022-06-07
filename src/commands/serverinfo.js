@@ -24,5 +24,6 @@ module.exports.run = async (Redshift, message) => {
 
 module.exports.help = {
     name: "serverinfo",
-    usage: "serverinfo command "
+    usage: "Mostra algumas informações do servidor!",
+    type: "normal"
 }

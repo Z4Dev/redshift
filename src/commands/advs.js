@@ -38,5 +38,6 @@ module.exports.run = (Redshift, message) => {
 }
 module.exports.help = {
     name: "advs",
-    usage: "adv command for admins"
+    usage: "Mostra as advertências de algum usuário",
+    type: 'normal'
 }
