@@ -3,7 +3,8 @@ import {  topTime } from "../events/toplevel";
 import settings from "../configs/settings.json"
 const sql = new SQLite("./src/score.sqlite", {fileMustExist: true})
 
-module.exports.run = async (redshift) => {
+module.exports.run = async (redshift, message) => {
+  if (!message.member.roles.cache.some(role => role.id === settings.STAFF_ROLE)) return message.reply("Você não tem permissão para usar esse comando.");
   var sqliteHits = sql.prepare('SELECT * FROM leaderboard ORDER BY score DESC').all()
   var channel = redshift.channels.cache.get(settings.leaderboard)
 
@@ -24,5 +25,6 @@ Parabéns aos colocados desta semana! A Sua atividade no grupo ajuda a manter a 
 
 module.exports.help = {
     name: "tt",
-    usage: "Clear command for admins"
+    usage: "Clear command for admins",
+    type: "admin"
 }

@@ -50,5 +50,6 @@ module.exports.run = async (Redshift, message) => {
 
 module.exports.help = {
     name: "topadvs",
-    usage: "topadvs command"
+    usage: "Mostra os 5 usuários com mais advertências!",
+    type: "normal"
 }
