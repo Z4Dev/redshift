@@ -8,8 +8,8 @@
   "scripts": {
     "dev": "nodemon src/index.js"
   },
-  
   "dependencies": {
+    "axios": "^0.27.2",
     "better-sqlite3": "^7.5.3",
     "blueapi": "^0.1.0",
     "blueapi.js": "^0.0.4",
