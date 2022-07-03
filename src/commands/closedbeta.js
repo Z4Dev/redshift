@@ -3,7 +3,7 @@ import { MessageEmbed } from "discord.js"
 import moment from 'moment'
 module.exports.run = async (Redshift, message) => {
     const d1 = moment().format('DD/MM/YYYY HH:mm:ss')
-    const d2 = "29/'7'/2022 23:00:00";
+    const d2 = "30/'8'/2022 23:00:00";
     const diff = moment(d2,"DD/MM/YYYY HH:mm:ss").diff(moment(d1,"DD/MM/YYYY HH:mm:ss"));
     const dias = moment.duration(diff).asDays();
     const re = new RegExp('^-?\\d+(?:\.\\d{0,' + (-1) + '})?');
