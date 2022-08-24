@@ -9,9 +9,9 @@ module.exports.run = (Redshift, message, args) => {
         let score;
         score = Redshift.getScore.get(user.id);
         if (!score) {
-          score = { id: `${message.guild.id}-${user.id}`, user: user.id, score: Number(args[1]) }
+          score = { id: `${message.guild.id}-${user.id}`, user: user.id, score: args[1] }
         }    
-        score.score = Number(args[1]);
+        score.score = args[1];
         Redshift.setScore.run(score);
         message.reply(`Setou ${args[1]} pontos para o usuário ${user} com sucesso!`);
     }
