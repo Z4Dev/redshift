@@ -9,7 +9,6 @@ import { Config } from 'node-json-db/dist/lib/JsonDBConfig'
  * @param {Message} message 
  */
 export const addMemberAdv = async (Redshift, message) => {
-    message.delete();
     const db = new JsonDB(new Config("ADVS", true, false, '/'));
     db.reload()
     try {

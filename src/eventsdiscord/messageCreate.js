@@ -12,6 +12,7 @@ module.exports = async (Redshift,message) => {
     db.reload()
     
     if (regex.test(message.content)) {
+      message.delete()
       try {
         const advs = (await db.getData(`/${message.author.id}`)) + 1
 
@@ -54,6 +55,7 @@ module.exports = async (Redshift,message) => {
         }
 
         if (hasTextCapslockAbuse(message.content)) {
+          message.delete()
           if (!capslockAlerts[message.author.id]) {
             const rocket31 = message.guild.emojis.cache.get('974544899586285579')
 
