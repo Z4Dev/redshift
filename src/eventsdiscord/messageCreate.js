@@ -78,11 +78,19 @@ module.exports = async (Redshift,message) => {
 
               switch (capslockAlerts[message.author.id].count) {
                 case 2:
-                  message.channel.send(`${message.author} cuidado com o abuso de capslock!`);
+                  message.channel.send(`${message.author} cuidado com o abuso de capslock!`).then((m) => {
+                    setTimeout(() => {
+                      m.delete()
+                    }, 7500)
+                  });
                   break;
               
                 case 3:
-                  message.channel.send(`${message.author} não abuse do capslock! Caso continue, você será punido!`);
+                  message.channel.send(`${message.author} não abuse do capslock! Caso continue, você será punido!`).then((m) => {
+                    setTimeout(() => {
+                      m.delete()
+                    }, 7500)
+                  });
                   break;
 
                 case 4:
@@ -94,10 +102,18 @@ module.exports = async (Redshift,message) => {
                     if (advs >= settings.MAX_ADV_TOKICK) {
                       addMemberAdv(Redshift, message)
                       .then(() => {
-                        message.channel.send(`**Taxado!** ${message.author} não seguiu as regras e acaba de ser kickado com **${advs}** advertências :wave:`)
+                        message.channel.send(`**Taxado!** ${message.author} não seguiu as regras e acaba de ser kickado com **${advs}** advertências :wave:`).then((m) => {
+                          setTimeout(() => {
+                            m.delete()
+                          }, 7500)
+                        });
                       })
                       .catch((err) => {
-                        message.channel.send(`Ocorreu um problema ao tentar kickar ${message.author}, talvez eu não tenha permissões suficientes para kickar este usuário!`)
+                        message.channel.send(`Ocorreu um problema ao tentar kickar ${message.author}, talvez eu não tenha permissões suficientes para kickar este usuário!`).then((m) => {
+                          setTimeout(() => {
+                            m.delete()
+                          }, 7500)
+                        });
                       })
                     } else {
                       await addMemberAdv(Redshift, message)
