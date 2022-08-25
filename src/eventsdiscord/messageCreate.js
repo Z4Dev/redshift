@@ -55,7 +55,6 @@ module.exports = async (Redshift,message) => {
         }
 
         if (hasTextCapslockAbuse(message.content)) {
-          message.delete()
           if (!capslockAlerts[message.author.id]) {
             const rocket31 = message.guild.emojis.cache.get('974544899586285579')
 
@@ -72,7 +71,7 @@ module.exports = async (Redshift,message) => {
             await message.react('🇵')
             await message.react('🇸')
           } else {
-            
+            message.delete()
             if (Date.now() - capslockAlerts[message.author.id].last_message_tick < 30 * 60 * 1000) {
               capslockAlerts[message.author.id].count++;
               capslockAlerts[message.author.id].last_message_tick = Date.now();
