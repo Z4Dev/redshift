@@ -1,8 +1,19 @@
 import { MessageEmbed } from 'discord.js'
 
+let delayCommand
+const delayTime = 10000 // 10 segundos
+
 module.exports.run = async (redshift, message, args, prefix) => {
   const nowTime = Date.now()
   const { author } = message;
+
+  if (delayCommand && nowTime - delayCommand < delayTime) {
+    const time = Math.floor((delayTime - (nowTime - delayCommand)) / 1000)
+    return message.channel.send(`Aguarde **${time} segundos** para executar este comando novamente.`)
+  }
+
+  delayCommand = nowTime
+
   const allPoints = redshift.getScore.all()
   const sortedPoints = allPoints.sort((a, b) => b.score - a.score).map((data, index) => {
     return { user: data.user, score: data.score, id: data.id, rankPosition: index + 1 }
@@ -24,7 +35,7 @@ module.exports.run = async (redshift, message, args, prefix) => {
   } else { 
     embed.setDescription(topPoints.join('\n'));
     if (executerPoints.rankPosition > 10) {
-      embed.addField(`Seu rank (${author.username})`, `**#${executerPoints.rankPosition}** - **${executerPoints.score} pontos**`);
+      embed.addFields({ name: `Seu rank (${author.username})`, value: `**#${executerPoints.rankPosition}** - **${executerPoints.score} pontos**`, inline: false });
     }
   }
 
