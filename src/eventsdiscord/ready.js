@@ -8,6 +8,7 @@ module.exports = (Redshift => {
     console.log("Redshift is online")
   
     Redshift.getScore = sql.prepare("SELECT * FROM leaderboard WHERE user = ?");
+    Redshift.allScores = sql.prepare("SELECT * FROM leaderboard");
     Redshift.setScore = sql.prepare("INSERT OR REPLACE INTO leaderboard (id, user, score) VALUES (@id, @user, @score);");
   
     setInterval(() => {
@@ -25,7 +26,9 @@ module.exports = (Redshift => {
     
     setInterval(() => {
       var server = Redshift.guilds.cache.get(settings.GROUP_ID);
-      let memberCount = server.memberCount;
-      Redshift.channels.fetch(settings.memberCount).then(channel => channel.setName(memberCount  + " Astronautas  💜"))
+      if (server) {
+        let memberCount = server.memberCount;
+        Redshift.channels.fetch(settings.memberCount).then(channel => channel.setName(memberCount  + " Astronautas  💜"))
+      }
     }, 60000);
 });

@@ -4,7 +4,7 @@ import { Config } from 'node-json-db/dist/lib/JsonDBConfig'
 
 import { addMemberAdv } from '../utils/addAdv'
 import { hasTextCapslockAbuse } from "../events/msg_capslock"
-const capslockAlerts = {}
+import * as capslockAlerts from "../utils/capslockAlerts"
 
 module.exports = async (Redshift,message) => {
     const regex = new RegExp(`(\\b|\\d)(${settings.ForbiddenWords.join('|')})(\\b|\\d)`, 'i');
@@ -54,93 +54,9 @@ module.exports = async (Redshift,message) => {
           score = { id: `${message.guild.id}-${message.author.id}`, user: message.author.id, score: 0 }
         }
 
-        if (hasTextCapslockAbuse(message.content)) {
-          if (!capslockAlerts[message.author.id]) {
-            const rocket31 = message.guild.emojis.cache.get('974544899586285579')
-
-            capslockAlerts[message.author.id] = {
-              count: 1,
-              last_message_tick: Date.now()
-            };
-
-            if (rocket31) {
-              await message.react(rocket31)
-            }
-            await message.react('🇨')
-            await message.react('🇦')
-            await message.react('🇵')
-            await message.react('🇸')
-          } else {
-            message.delete()
-            if (Date.now() - capslockAlerts[message.author.id].last_message_tick < 30 * 60 * 1000) {
-              capslockAlerts[message.author.id].count++;
-              capslockAlerts[message.author.id].last_message_tick = Date.now();
-
-              switch (capslockAlerts[message.author.id].count) {
-                case 2:
-                  message.channel.send(`${message.author} cuidado com o abuso de capslock!`).then((m) => {
-                    setTimeout(() => {
-                      m.delete()
-                    }, 7500)
-                  });
-                  break;
-              
-                case 3:
-                  message.channel.send(`${message.author} não abuse do capslock! Caso continue, você será punido!`).then((m) => {
-                    setTimeout(() => {
-                      m.delete()
-                    }, 7500)
-                  });
-                  break;
-
-                case 4:
-                  capslockAlerts[message.author.id] = undefined
-
-                  try {
-                    const advs = (await db.getData(`/${message.author.id}`)) + 1
-
-                    if (advs >= settings.MAX_ADV_TOKICK) {
-                      addMemberAdv(Redshift, message)
-                      .then(() => {
-                        message.channel.send(`**Taxado!** ${message.author} não seguiu as regras e acaba de ser kickado com **${advs}** advertências :wave:`).then((m) => {
-                          setTimeout(() => {
-                            m.delete()
-                          }, 7500)
-                        });
-                      })
-                      .catch((err) => {
-                        message.channel.send(`Ocorreu um problema ao tentar kickar ${message.author}, talvez eu não tenha permissões suficientes para kickar este usuário!`).then((m) => {
-                          setTimeout(() => {
-                            m.delete()
-                          }, 7500)
-                        });
-                      })
-                    } else {
-                      await addMemberAdv(Redshift, message)
-                      message.channel.send(`${message.author} você está recebendo uma advertência por abuso de capslock! Você agora tem **${advs}** advertências. (${advs}/${settings.MAX_ADV_TOKICK})`).then((m) => {
-                        setTimeout(() => {
-                            m.delete()
-                        }, 7500)
-                      });
-                    }
-                  } catch(err) {
-                    await addMemberAdv(Redshift, message)
-                    message.channel.send(`${message.author} você está recebendo uma advertência por abuso de capslock! Você agora tem 1 advertência. (1/${settings.MAX_ADV_TOKICK})`).then((m) => {
-                      setTimeout(() => {
-                          m.delete()
-                      }, 7500)
-                    });
-                  }
-                  break;
-
-                default:
-                  break;
-              }
-            } else {
-              capslockAlerts[message.author.id].count = 1;
-              capslockAlerts[message.author.id].last_message_tick = Date.now();
-            }
-          }
+        if (await hasTextCapslockAbuse(message.content)) {
+          score.score = score.score - 10
+          capslockAlerts.add(Redshift, message.author, message)
         }
   
         score.score = score.score + 10;
