@@ -2,6 +2,9 @@ import settings from "../configs/settings.json"
 import { JsonDB } from 'node-json-db'
 import { Config } from 'node-json-db/dist/lib/JsonDBConfig'
 
+import { hasTextCapslockAbuse } from "../events/msg_capslock"
+import * as capslockAlerts from "../utils/capslockAlerts"
+
 module.exports = async (Redshift,oldmessage, newmessage) => {
 
 
@@ -45,4 +48,7 @@ module.exports = async (Redshift,oldmessage, newmessage) => {
         }
     }
     
+    if (await hasTextCapslockAbuse(newmessage.content)) {
+        capslockAlerts.add(Redshift, newmessage.author, newmessage)
+    }
 }

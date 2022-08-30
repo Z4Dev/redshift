@@ -14,7 +14,7 @@ module.exports.run = async (redshift, message, args, prefix) => {
 
   delayCommand = nowTime
 
-  const allPoints = redshift.getScore.all()
+  const allPoints = redshift.allScores.all()
   const sortedPoints = allPoints.sort((a, b) => b.score - a.score).map((data, index) => {
     return { user: data.user, score: data.score, id: data.id, rankPosition: index + 1 }
   })
@@ -26,9 +26,9 @@ module.exports.run = async (redshift, message, args, prefix) => {
   const embed = new MessageEmbed()
   .setColor('#8257E5')
   .setTimestamp(nowTime)
-  .setAuthor({name: 'Top Pontos', icon_url: 'https://i.imgur.com/joNSV1d.png'})
-  .setThumbnail('https://i.imgur.com/joNSV1d.png')
-  .setFooter({text: `Executado por ${author.tag}`, icon_url: author.displayAvatarURL({dynamic: true})});
+  .setAuthor({name: 'Top Pontos', iconURL: 'https://i.imgur.com/joNSV1d.png'})
+  .setThumbnail('https://i.imgur.com/wu8Syrx.png')
+  .setFooter({text: `Executado por ${author.tag}`, iconURL: author.displayAvatarURL({dynamic: true})});
 
   if (topPoints.length === 0) {
     embed.setDescription('Ninguém pontuou ainda.');

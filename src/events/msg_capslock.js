@@ -1,4 +1,4 @@
-export const hasTextCapslockAbuse = (str) => {
+export const hasTextCapslockAbuse = async (str) => {
     const words = str.match(/[A-Z]+/gi)
 	if (!words) return false;
 
@@ -10,9 +10,9 @@ export const hasTextCapslockAbuse = (str) => {
 
 	const upperWords =  words.filter(word => word.length > 1 && word.length / 2 < (word.match(/[A-Z]/g) || []).length)
 	const lowerWords =  words.filter(word => word.length > 1 && word.length / 2 < (word.match(/[a-z]/g) || []).length)
-
+	
 	const upperWordsCount = upperWords.length
 	const lowerWordsCount = lowerWords.length
 	
-	return upperWordsCount > 0 && upperWordsCount > lowerWordsCount && upper > lower
+	return upperWordsCount > 0 && (upperWordsCount > lowerWordsCount && upper > lower) || upper > lower
 }
