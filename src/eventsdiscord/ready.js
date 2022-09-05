@@ -1,9 +1,11 @@
-
 import SQLite  from "better-sqlite3";
 const sql = new SQLite("./src/score.sqlite", {fileMustExist: true});
 import moment from "moment-timezone";
 import settings from "../configs/settings.json"
-module.exports = (Redshift => {
+
+import { numberToEmoji } from "../utils/numberToEmoji";
+
+module.exports = (async Redshift => {
 
     console.log("Redshift is online")
   
@@ -22,13 +24,18 @@ module.exports = (Redshift => {
         }
       }
     }, 1.8e+7);
-  
-    
-    setInterval(() => {
-      var server = Redshift.guilds.cache.get(settings.GROUP_ID);
-      if (server) {
-        let memberCount = server.memberCount;
-        Redshift.channels.fetch(settings.memberCount).then(channel => channel.setName(memberCount  + " Astronautas  💜"))
-      }
-    }, 60000);
+
+    const guild = Redshift.guilds.cache.get(settings.GROUP_ID);
+    if (guild) {
+      const memberCount = (await guild.members.fetch()).filter(m => !m.user.bot).size;
+      const rck_roxo_emoji = Redshift.emojis.cache.get("984914808107323462");
+      const channel = guild.channels.cache.get(settings.memberCount);
+      if (!channel) return;
+      
+      channel.edit({ topic: `${rck_roxo_emoji || `🚀`}・${numberToEmoji(memberCount)} Astronautas` });
+      setInterval(async () => {
+        const memberCount = (await guild.members.fetch()).filter(m => !m.user.bot).size;
+        channel.edit({ topic: `${rck_roxo_emoji || `🚀`}・${numberToEmoji(memberCount)} Astronautas` });
+      }, 330000)
+    }
 });
