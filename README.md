@@ -1,3 +1,0 @@
-# redshift
-
-Coming Soon
